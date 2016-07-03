@@ -54,6 +54,8 @@
     </Compile>
     <Compile Include="DesignTime\Item.cs" />
     <Compile Include="DesignTime\Project.cs" />
+    <Compile Include="DesignTime\Theme.cs" />
+    <Compile Include="DesignTime\ThemeConfiguration.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="NodeContainer.cs" />
     <Compile Include="FlowNode.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Nodes\VoidNode.cs" />
+    <Compile Include="VisibleEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

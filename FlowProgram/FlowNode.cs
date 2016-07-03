@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FlowProgram
 {
-    class FlowNode : Entity
+    class FlowNode : VisibleEntity
     {
-
+        
     }
 }

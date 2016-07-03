@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.DesignTime
 {
-    class Item : VisibleEntity
+    public class ThemeConfiguration
     {
-        public List<NodeContainer> Containers;
+        public Dictionary<Type, Theme> Directory;
 
-        public Item()
+        public ThemeConfiguration()
         {
-            Containers = new List<NodeContainer>();
+            Directory = new Dictionary<Type, Theme>();
         }
     }
 }

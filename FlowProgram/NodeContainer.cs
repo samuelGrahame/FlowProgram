@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram
 {
-    class NodeContainer : Entity
+    class NodeContainer : VisibleEntity
     {
         public List<FlowNode> Nodes;
 

@@ -10,7 +10,7 @@ namespace FlowProgram.Controls
 {
     class FlowEditor : Control
     {
-        public Item Document;
+        public Item Document = null;
 
         public FlowEditor()
         {
@@ -24,8 +24,15 @@ namespace FlowProgram.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (Document == null)
+            if (Document == null || Document.Containers.Count == 0)
                 return;
+
+            for (int i = 0, length = Document.Containers.Count; i < length; i++)
+            {
+                VisibleEntity Item = Document.Containers[i];
+
+
+            }
         }
     }
 }
