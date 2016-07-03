@@ -9,10 +9,12 @@ namespace FlowProgram.DesignTime
     public class ThemeConfiguration
     {
         public Dictionary<Type, Theme> Directory;
+        public Theme DefaultTheme;
 
         public ThemeConfiguration()
         {
             Directory = new Dictionary<Type, Theme>();
+            DefaultTheme = new Theme();
         }
     }
 }

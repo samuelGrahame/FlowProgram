@@ -19,7 +19,13 @@ namespace FlowProgram
             Size = SizeF.Empty;
         }
 
+        private Type type = null;
 
+        public Type Type()
+        {
+            return type ?? (type = this.GetType());
+        }
+        
         /// <summary>
         /// Must call first, if you dont want the default stuff you can override and not call..
         /// </summary>
