@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.Nodes
 {
-    class ShortNode
+    class ShortNode : FlowNode
     {
         public short Value;
+        public ShortNode()
+        {
+            Name = "Short";
+        }
     }
 }

@@ -9,5 +9,10 @@ namespace FlowProgram.Nodes
     class DoubleNode : FlowNode
     {
         public double Value;
+
+        public DoubleNode()
+        {
+            Name = "Double";
+        }
     }
 }

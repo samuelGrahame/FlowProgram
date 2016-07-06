@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class BoolNode : FlowNode
     {
         public bool Value;
+        public BoolNode()
+        {
+            Name = "Bool";
+        }
     }
 }

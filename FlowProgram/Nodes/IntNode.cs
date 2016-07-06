@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class IntNode : FlowNode
     {
         public int Value;
+        public IntNode()
+        {
+            Name = "Integer";
+        }
     }
 }

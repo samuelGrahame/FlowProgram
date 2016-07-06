@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class ByteNode : FlowNode
     {
         public byte Value;
+        public ByteNode()
+        {
+            Name = "Byte";
+        }
     }
 }

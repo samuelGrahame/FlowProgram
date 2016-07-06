@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class FloatNode : FlowNode
     {
         public float Value;
+        public FloatNode()
+        {
+            Name = "Float";
+        }
     }
 }

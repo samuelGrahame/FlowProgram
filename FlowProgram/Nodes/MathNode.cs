@@ -9,6 +9,9 @@ namespace FlowProgram.Nodes
     class MathNode : FlowNode
     {
 
-
+        public MathNode()
+        {
+            Name = "Math";
+        }
     }
 }

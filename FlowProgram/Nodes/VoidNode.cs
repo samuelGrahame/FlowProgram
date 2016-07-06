@@ -8,5 +8,9 @@ namespace FlowProgram.Nodes
 {
     class VoidNode : FlowNode
     {
+        public VoidNode()
+        {
+            Name = "Void";
+        }
     }
 }

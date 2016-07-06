@@ -8,6 +8,9 @@ namespace FlowProgram.Nodes
 {
     class FunctionNode : FlowNode
     {
-
+        public FunctionNode()
+        {
+            Name = "Function";
+        }
     }
 }

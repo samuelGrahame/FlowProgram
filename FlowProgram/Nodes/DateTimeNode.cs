@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class DateTimeNode : FlowNode
     {
         public DateTime? Value;
+        public DateTimeNode()
+        {
+            Name = "DateTime";
+        }
     }
 }

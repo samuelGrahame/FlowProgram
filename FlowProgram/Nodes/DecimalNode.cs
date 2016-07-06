@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class DecimalNode : FlowNode
     {
         public decimal Value;
+        public DecimalNode()
+        {
+            Name = "Decimal";
+        }
     }
 }

@@ -9,5 +9,10 @@ namespace FlowProgram.Nodes
     class StringNode : FlowNode
     {
         public string Value;
+
+        public StringNode()
+        {
+            Name = "String";
+        }
     }
 }

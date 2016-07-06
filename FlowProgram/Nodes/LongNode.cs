@@ -9,5 +9,9 @@ namespace FlowProgram.Nodes
     class LongNode :FlowNode
     {
         public long Value;
+        public LongNode()
+        {
+            Name = "Long";
+        }
     }
 }

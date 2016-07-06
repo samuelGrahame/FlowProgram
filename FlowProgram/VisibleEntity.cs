@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlowProgram
 {
@@ -65,9 +66,17 @@ namespace FlowProgram
             using (SolidBrush brush = new SolidBrush(theme.HeaderColor))
             {
                 if (theme.CornerRadius == 0)
-                    g.FillRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, 15)));
+                    g.FillRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)));
                 else
-                    g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, 15)), theme.CornerRadius, Helper.Edges.Top);
+                    g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)), theme.CornerRadius, Helper.Edges.Top);
+            }
+
+            if(this.Name != "")
+            {
+                using (SolidBrush brush = new SolidBrush(theme.Forecolor))
+                {
+                    TextRenderer.DrawText(g, Name, theme.Font, new Rectangle(ViewLocation.Add(new Point(0, theme.CornerRadius == 0 ? 0 : theme.CornerRadius / 4)), new Size(Size.Width, theme.HeaderHeight)), theme.Forecolor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);                    
+                }
             }
 
             if (theme.Border && theme.BorderThickness > 0)
@@ -81,7 +90,7 @@ namespace FlowProgram
                         else
                             g.DrawRoundedRectangle(pen, new Rectangle(ViewLocation, Size), theme.CornerRadius);
                     }
-                }                
+                }
             }
 
             

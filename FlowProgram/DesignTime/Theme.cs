@@ -31,5 +31,6 @@ namespace FlowProgram.DesignTime
         public Theme FocusedTheme { get; set; } // '' ''
         public int CornerRadius { get; set; }
         public bool Shadow { get; set; }
+        public int HeaderHeight { get; set; } = 25;
     }
 }

@@ -8,5 +8,9 @@ namespace FlowProgram.Nodes
 {
     class NewObjectNode : FlowNode
     {
+        public NewObjectNode()
+        {
+            Name = "New";
+        }
     }
 }
