@@ -71,11 +71,13 @@ namespace FlowProgram
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)), theme.CornerRadius, Helper.Edges.Top);
             }
 
-            if(this.Name != "")
+            
+
+            if(this.type.Name.Length > 0)
             {
                 using (SolidBrush brush = new SolidBrush(theme.Forecolor))
                 {
-                    TextRenderer.DrawText(g, Name, theme.Font, new Rectangle(ViewLocation.Add(new Point(0, theme.CornerRadius == 0 ? 0 : theme.CornerRadius / 4)), new Size(Size.Width, theme.HeaderHeight)), theme.Forecolor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);                    
+                    TextRenderer.DrawText(g, this.type.Name, theme.Font, new Rectangle(ViewLocation.Add(new Point(0, theme.CornerRadius == 0 ? 0 : theme.CornerRadius / 4)), new Size(Size.Width, theme.HeaderHeight)), theme.Forecolor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);                    
                 }
             }
 

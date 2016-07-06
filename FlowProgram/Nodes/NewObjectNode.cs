@@ -10,7 +10,7 @@ namespace FlowProgram.Nodes
     {
         public NewObjectNode()
         {
-            Name = "New";
+            //Name = "New";
         }
     }
 }

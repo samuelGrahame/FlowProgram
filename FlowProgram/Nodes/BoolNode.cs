@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public bool Value;
         public BoolNode()
         {
-            Name = "Bool";
+            //Name = "Bool";
         }
     }
 }

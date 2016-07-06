@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public float Value;
         public FloatNode()
         {
-            Name = "Float";
+            //Name = "Float";
         }
     }
 }

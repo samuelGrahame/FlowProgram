@@ -10,7 +10,7 @@ namespace FlowProgram.Nodes
     {
         public FunctionNode()
         {
-            Name = "Function";
+            //Name = "Function";
         }
     }
 }

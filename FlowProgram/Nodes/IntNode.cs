@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public int Value;
         public IntNode()
         {
-            Name = "Integer";
+            //Name = "Integer";
         }
     }
 }

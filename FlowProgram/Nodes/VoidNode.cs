@@ -10,7 +10,7 @@ namespace FlowProgram.Nodes
     {
         public VoidNode()
         {
-            Name = "Void";
+            //Name = "Void";
         }
     }
 }

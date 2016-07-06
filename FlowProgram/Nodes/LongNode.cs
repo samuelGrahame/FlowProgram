@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public long Value;
         public LongNode()
         {
-            Name = "Long";
+            //Name = "Long";
         }
     }
 }

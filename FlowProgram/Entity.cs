@@ -11,6 +11,7 @@ namespace FlowProgram
         /// <summary>
         /// Just a way of giving a unique identitfier.
         /// </summary>
-        public string Name { get; set; }
+        //public string Name { get; set; }
+        // we dont need the name...
     }
 }

@@ -12,7 +12,7 @@ namespace FlowProgram.Nodes
 
         public StringNode()
         {
-            Name = "String";
+           // Name = "String";
         }
     }
 }

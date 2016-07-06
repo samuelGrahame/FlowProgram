@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public DateTime? Value;
         public DateTimeNode()
         {
-            Name = "DateTime";
+            ////Name = "DateTime";
         }
     }
 }

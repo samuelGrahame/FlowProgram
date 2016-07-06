@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public decimal Value;
         public DecimalNode()
         {
-            Name = "Decimal";
+            //Name = "Decimal";
         }
     }
 }

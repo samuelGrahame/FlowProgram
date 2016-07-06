@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public byte Value;
         public ByteNode()
         {
-            Name = "Byte";
+            ///Name = "Byte";
         }
     }
 }

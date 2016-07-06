@@ -11,7 +11,7 @@ namespace FlowProgram.Nodes
         public short Value;
         public ShortNode()
         {
-            Name = "Short";
+            //Name = "Short";
         }
     }
 }
