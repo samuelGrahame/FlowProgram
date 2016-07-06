@@ -27,13 +27,15 @@ namespace FlowProgram.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                            
             if (Document == null || Document.Containers.Count == 0)
                 return;
 
             for (int i = 0, length = Document.Containers.Count; i < length; i++)
             {
                 VisibleEntity Item = Document.Containers[i];
-                Theme ItemTheme = ThemeConfig.Directory[Item.Type()];
+                Theme ItemTheme = ThemeConfig.Directory.ContainsKey(Item.Type()) ? ThemeConfig.Directory[Item.Type()] : null;
 
                 if (ItemTheme == null)
                 {
