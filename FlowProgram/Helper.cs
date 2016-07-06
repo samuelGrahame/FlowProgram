@@ -18,6 +18,36 @@ namespace FlowProgram
             }
         }
 
+        public static Point Mul(this Point A, Point B)
+        {
+            return new Point(A.X * B.X, A.Y * B.Y);
+        }
+
+        public static Point Mul(this Point A, int B)
+        {
+            return new Point(A.X * B, A.Y * B);
+        }
+
+        public static Point Sub(this Point A, Point B)
+        {
+            return new Point(A.X - B.X, A.Y - B.Y);
+        }
+
+        public static Point Add(this Point A, Point B)
+        {
+            return new Point(A.X + B.X, A.Y + B.Y);
+        }
+
+        public static Size Sub(this Size A, Size B)
+        {
+            return new Size(A.Width - B.Width, A.Height- B.Height);
+        }
+
+        public static Size Add(this Size A, Size B)
+        {
+            return new Size(A.Width + B.Width, A.Height + B.Height);
+        }
+
         public static GraphicsPath RoundedRect(Rectangle bounds, int radius = 0)
         {            
             GraphicsPath path = new GraphicsPath();

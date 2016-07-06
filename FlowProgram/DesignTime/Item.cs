@@ -8,11 +8,11 @@ namespace FlowProgram.DesignTime
 {
     class Item : VisibleEntity
     {
-        public List<NodeContainer> Containers;
+        public List<VisibleEntity> Containers;
 
         public Item()
         {
-            Containers = new List<NodeContainer>();
+            Containers = new List<VisibleEntity>();
         }
     }
 }

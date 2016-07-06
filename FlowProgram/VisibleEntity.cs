@@ -12,6 +12,8 @@ namespace FlowProgram
     {
         public Point Location;
         public Size Size;
+        private readonly Point Offset = new Point(5, 5);
+        private readonly Size OffsetSize = new Size(10, 10);
 
         public VisibleEntity()
         {
@@ -31,7 +33,7 @@ namespace FlowProgram
         /// </summary>
         /// <param name="theme"></param>
         /// <param name="g"></param>
-        public virtual void Render(Theme theme, Graphics g)
+        public virtual void Render(Theme theme, Graphics g, Point ViewLocation, bool DrawShadow = false)
         {
             // lets draw the base??            
             // what is good about this, we dont need to worry if we are selected or hovered because it gets taken care of that through the theme class.
@@ -40,12 +42,24 @@ namespace FlowProgram
                 return;
 
             // theme.BackColor
+
+            if(DrawShadow)
+            {
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(25, Color.Black)))
+                {
+                    if (theme.CornerRadius == 0)
+                        g.FillRectangle(brush, new Rectangle(ViewLocation.Sub(Offset), Size.Add(OffsetSize)));
+                    else
+                        g.FillRoundedRectangle(brush, new Rectangle(ViewLocation.Sub(Offset), Size.Add(OffsetSize)), theme.CornerRadius);
+                }
+            }
+
             using (SolidBrush brush = new SolidBrush(theme.BackColor))
             {
                 if(theme.CornerRadius==0)
-                    g.FillRectangle(brush, new Rectangle(Location, Size));
+                    g.FillRectangle(brush, new Rectangle(ViewLocation, Size));
                 else
-                    g.FillRoundedRectangle(brush, new Rectangle(Location, Size), theme.CornerRadius);                
+                    g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, Size), theme.CornerRadius);                
             }
 
             if(theme.Border && theme.BorderThickness > 0)
@@ -55,15 +69,12 @@ namespace FlowProgram
                     using (Pen pen = new Pen(brush, theme.BorderThickness))
                     {
                         if (theme.CornerRadius == 0)
-                            g.DrawRectangle(pen, new Rectangle(Location, Size));
+                            g.DrawRectangle(pen, new Rectangle(ViewLocation, Size));
                         else
-                            g.DrawRoundedRectangle(pen, new Rectangle(Location, Size), theme.CornerRadius);
+                            g.DrawRoundedRectangle(pen, new Rectangle(ViewLocation, Size), theme.CornerRadius);
                     }
-                }
-                //
-                //g.DrawRectangle()
-            }
-             //g.FillRectangle()
+                }                
+            }             
         }
     }
 }
