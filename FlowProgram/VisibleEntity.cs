@@ -69,9 +69,7 @@ namespace FlowProgram
                     g.FillRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)));
                 else
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)), theme.CornerRadius, Helper.Edges.Top);
-            }
-
-            
+            }            
 
             if(this.type.Name.Length > 0)
             {
