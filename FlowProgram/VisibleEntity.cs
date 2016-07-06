@@ -33,7 +33,7 @@ namespace FlowProgram
         /// </summary>
         /// <param name="theme"></param>
         /// <param name="g"></param>
-        public virtual void Render(Theme theme, Graphics g, Point ViewLocation, bool DrawShadow = false)
+        public virtual void Render(Theme theme, Graphics g, Point ViewLocation)
         {
             // lets draw the base??            
             // what is good about this, we dont need to worry if we are selected or hovered because it gets taken care of that through the theme class.
@@ -43,7 +43,7 @@ namespace FlowProgram
 
             // theme.BackColor
 
-            if(DrawShadow)
+            if(theme.Shadow)
             {
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(25, Color.Black)))
                 {
@@ -62,7 +62,15 @@ namespace FlowProgram
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, Size), theme.CornerRadius);                
             }
 
-            if(theme.Border && theme.BorderThickness > 0)
+            using (SolidBrush brush = new SolidBrush(theme.HeaderColor))
+            {
+                if (theme.CornerRadius == 0)
+                    g.FillRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, 15)));
+                else
+                    g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, 15)), theme.CornerRadius, Helper.Edges.Top);
+            }
+
+            if (theme.Border && theme.BorderThickness > 0)
             {
                 using (SolidBrush brush = new SolidBrush(theme.BorderColor))
                 {
@@ -74,7 +82,9 @@ namespace FlowProgram
                             g.DrawRoundedRectangle(pen, new Rectangle(ViewLocation, Size), theme.CornerRadius);
                     }
                 }                
-            }             
+            }
+
+            
         }
     }
 }

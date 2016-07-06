@@ -10,11 +10,26 @@ namespace FlowProgram
 {
     public static class Helper
     {
-        public static void DrawRoundedRectangle(this Graphics graphics, Pen pen, Rectangle bounds, int cornerRadius = 0)
+        public enum Edges
+        {
+            All,
+            Top,
+            Bottom
+        }
+
+        public static void DrawRoundedRectangle(this Graphics graphics, Pen pen, Rectangle bounds, int cornerRadius = 0, Edges edge = Edges.All)
         {            
-            using (GraphicsPath path = RoundedRect(bounds, cornerRadius))
+            using (GraphicsPath path = RoundedRect(bounds, cornerRadius, edge))
             {
                 graphics.DrawPath(pen, path);
+            }
+        }
+
+        public static void FillRoundedRectangle(this Graphics graphics, Brush brush, Rectangle bounds, int cornerRadius = 0, Edges edge = Edges.All)
+        {
+            using (GraphicsPath path = RoundedRect(bounds, cornerRadius, edge))
+            {
+                graphics.FillPath(brush, path);
             }
         }
 
@@ -48,7 +63,7 @@ namespace FlowProgram
             return new Size(A.Width + B.Width, A.Height + B.Height);
         }
 
-        public static GraphicsPath RoundedRect(Rectangle bounds, int radius = 0)
+        public static GraphicsPath RoundedRect(Rectangle bounds, int radius = 0, Edges edge = Edges.All)
         {            
             GraphicsPath path = new GraphicsPath();
 
@@ -62,31 +77,50 @@ namespace FlowProgram
             Size size = new Size(diameter, diameter);
             Rectangle arc = new Rectangle(bounds.Location, size);
 
-            // top left arc  
-            path.AddArc(arc, 180, 90);
+            switch (edge)
+            {
+                case Edges.All:
+                    // top left arc  
+                    path.AddArc(arc, 180, 90);
 
-            // top right arc  
-            arc.X = bounds.Right - diameter;
-            path.AddArc(arc, 270, 90);
+                    // top right arc  
+                    arc.X = bounds.Right - diameter;
+                    path.AddArc(arc, 270, 90);
 
-            // bottom right arc  
-            arc.Y = bounds.Bottom - diameter;
-            path.AddArc(arc, 0, 90);
+                    // bottom right arc
+                    arc.Y = bounds.Bottom - diameter;
+                    path.AddArc(arc, 0, 90);
 
-            // bottom left arc 
-            arc.X = bounds.Left;
-            path.AddArc(arc, 90, 90);
+                    // bottom left arc
+                    arc.X = bounds.Left;
+                    path.AddArc(arc, 90, 90);
+                    break;
+                case Edges.Top:
+                    // top left arc 
+                    path.AddArc(arc, 180, 90);
 
+                    // top right arc
+                    arc.X = bounds.Right - diameter;
+                    path.AddArc(arc, 270, 90);
+
+                    path.AddRectangle(new Rectangle(bounds.Location.Add(new Point (0, radius)), bounds.Size.Sub(new Size(0, radius))));
+
+                    break;
+                case Edges.Bottom:
+                    // bottom right arc
+                    arc.Y = bounds.Bottom - diameter;
+                    path.AddArc(arc, 0, 90);
+
+                    // bottom left arc
+                    arc.X = bounds.Left;
+                    path.AddArc(arc, 90, 90);
+                    break;
+                default:
+                    break;
+            }
+            
             path.CloseFigure();
             return path;
-        }
-
-        public static void FillRoundedRectangle(this Graphics graphics, Brush brush, Rectangle bounds, int cornerRadius = 0)
-        {            
-            using (GraphicsPath path = RoundedRect(bounds, cornerRadius))
-            {
-                graphics.FillPath(brush, path);
-            }
         }
     }
 }

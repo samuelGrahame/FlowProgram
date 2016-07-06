@@ -29,31 +29,36 @@ namespace FlowProgram
                 FlowEditor.ThemeConfig.DefaultTheme = new DesignTime.Theme()
                 {
                     BackColor = Color.FromArgb(69, 69, 69), // /,/Color.FromArgb(69, 69, 69),                    
-                    Border = false,
+                    Border = true,
+                    HeaderColor = Color.ForestGreen,
                     BorderThickness = 1,
-                    BorderColor = Color.LightGray,
+                    BorderColor = Color.Black,
                     CornerRadius = 5,
                     Forecolor = Color.Yellow,
                     Font = new Font("Arial", 16),
                     FocusedTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(69, 69, 69),                    
+                        BackColor = Color.FromArgb(69, 69, 69),
+                        HeaderColor = Color.ForestGreen,
                         Border = true,
                         BorderThickness = 1,
-                        BorderColor = Color.CornflowerBlue,
+                        BorderColor = Color.Black,
                         CornerRadius = 5,
                         Forecolor = Color.Yellow,
                         Font = new Font("Arial", 16),
+                        Shadow = true
                     },
                     HoverTheme = new DesignTime.Theme()
                     {
                         BackColor = Color.FromArgb(75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
-                        Border = false,
+                        Border = true,
+                        HeaderColor = Color.ForestGreen,
                         BorderThickness = 1,
-                        BorderColor = Color.CornflowerBlue,
+                        BorderColor = Color.Black,
                         CornerRadius = 5,
                         Forecolor = Color.Yellow,
                         Font = new Font("Arial", 16),
+                        Shadow = false
                     }
                 };
 

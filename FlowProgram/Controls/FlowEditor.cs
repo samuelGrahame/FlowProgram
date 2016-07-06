@@ -198,13 +198,13 @@ namespace FlowProgram.Controls
                 VisibleEntity Item = Document.Containers[i];                
                 if(DragItem != Item)
                 {
-                    Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(ViewPoint), true);
+                    Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(ViewPoint));
                 }
             }
 
             if(DragItem != null)
             {
-                DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, DragItem.Location.Sub(ViewPoint), true);
+                DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, DragItem.Location.Sub(ViewPoint));
             }
         }
     }
