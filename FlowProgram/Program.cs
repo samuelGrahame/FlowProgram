@@ -29,20 +29,21 @@ namespace FlowProgram
                 FlowEditor.ThemeConfig.DefaultTheme = new DesignTime.Theme()
                 {
                     BackColor = Color.FromArgb(69, 69, 69), // /,/Color.FromArgb(69, 69, 69),                    
-                    Border = true,
+                    Border = false,
                     HeaderColor = Color.ForestGreen,
                     BorderThickness = 1,
-                    BorderColor = Color.Black,
+                    BorderColor = Color.FromArgb(50, 50, 50),
                     CornerRadius = 5,
                     Forecolor = Color.Yellow,
                     Font = new Font("Arial", 16),
+                    Shadow = true,
                     FocusedTheme = new DesignTime.Theme()
                     {
                         BackColor = Color.FromArgb(69, 69, 69),
                         HeaderColor = Color.ForestGreen,
-                        Border = true,
+                        Border = false,
                         BorderThickness = 1,
-                        BorderColor = Color.Black,
+                        BorderColor = Color.FromArgb(50, 50, 50),
                         CornerRadius = 5,
                         Forecolor = Color.Yellow,
                         Font = new Font("Arial", 16),
@@ -51,14 +52,14 @@ namespace FlowProgram
                     HoverTheme = new DesignTime.Theme()
                     {
                         BackColor = Color.FromArgb(75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
-                        Border = true,
+                        Border = false,
                         HeaderColor = Color.ForestGreen,
                         BorderThickness = 1,
-                        BorderColor = Color.Black,
+                        BorderColor = Color.FromArgb(50, 50, 50),
                         CornerRadius = 5,
                         Forecolor = Color.Yellow,
                         Font = new Font("Arial", 16),
-                        Shadow = false
+                        Shadow = true
                     }
                 };
 
