@@ -28,5 +28,6 @@ namespace FlowProgram.DesignTime
         public Font Font { get; set; }
         public Theme HoverTheme { get; set; } // if null it will be default
         public Theme FocusedTheme { get; set; } // '' ''
+        public int CornerRadius { get; set; }
     }
 }

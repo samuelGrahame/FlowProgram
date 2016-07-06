@@ -10,13 +10,13 @@ namespace FlowProgram
 {
     class VisibleEntity : Entity
     {
-        public PointF Location;
-        public SizeF Size;
+        public Point Location;
+        public Size Size;
 
         public VisibleEntity()
         {
-            Location = PointF.Empty;
-            Size = SizeF.Empty;
+            Location = Point.Empty;
+            Size = Size.Empty;
         }
 
         private Type type = null;
@@ -42,7 +42,10 @@ namespace FlowProgram
             // theme.BackColor
             using (SolidBrush brush = new SolidBrush(theme.BackColor))
             {
-                g.FillRectangle(brush, new RectangleF(Location, Size));
+                if(theme.CornerRadius==0)
+                    g.FillRectangle(brush, new Rectangle(Location, Size));
+                else
+                    g.FillRoundedRectangle(brush, new Rectangle(Location, Size), theme.CornerRadius);                
             }
 
             if(theme.Border && theme.BorderThickness > 0)
@@ -51,7 +54,10 @@ namespace FlowProgram
                 {
                     using (Pen pen = new Pen(brush, theme.BorderThickness))
                     {
-                        g.DrawRectangle(pen, Location.X, Location.Y, Size.Width, Size.Height);
+                        if (theme.CornerRadius == 0)
+                            g.DrawRectangle(pen, new Rectangle(Location, Size));
+                        else
+                            g.DrawRoundedRectangle(pen, new Rectangle(Location, Size), theme.CornerRadius);
                     }
                 }
                 //
