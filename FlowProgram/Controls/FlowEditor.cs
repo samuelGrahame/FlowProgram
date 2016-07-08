@@ -26,6 +26,9 @@ namespace FlowProgram.Controls
         private bool IsMouseWheenDown;
         private bool IsSpaceDown;
 
+        public VisibleEntity P1 = null;
+        public VisibleEntity P2 = null;
+
         public FlowEditor()
         {
             base.SetStyle(ControlStyles.OptimizedDoubleBuffer | 
@@ -39,6 +42,12 @@ namespace FlowProgram.Controls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             IsSpaceDown = e.KeyCode == Keys.Space;
+
+            if (e.KeyCode == Keys.A)
+                P1 = FocusedItem;
+            if (e.KeyCode == Keys.S)
+                P2 = FocusedItem;
+
             base.OnKeyDown(e);
         }
 
@@ -193,6 +202,11 @@ namespace FlowProgram.Controls
             if (Document == null || Document.Containers.Count == 0)
                 return;
 
+            if(P1 != null && P2 != null)
+            {
+                e.Graphics.DrawCurve(Pens.Black, GetPointsFrom(P1, P2));
+            }
+
             for (int i = 0, length = Document.Containers.Count; i < length; i++)
             {
                 VisibleEntity Item = Document.Containers[i];                
@@ -206,6 +220,37 @@ namespace FlowProgram.Controls
             {
                 DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, DragItem.Location.Sub(ViewPoint));
             }
+        }
+
+        public Point[] GetPointsFrom(VisibleEntity a, VisibleEntity b)
+        {
+            Point[] Points = new Point[4];
+            
+            Points[0] = a.Location;
+
+            if (a.Location.Y < b.Location.Y)
+            {
+                Points[0].Y += a.Size.Height;
+                
+                Points[1] = Points[0].Add(new Point(0, a.Size.Height));
+
+                Points[3] = b.Location;
+
+                Points[2] = Points[3].Sub(new Point(0, b.Size.Height));
+            }
+            else
+            {                               
+                Points[1] = Points[0].Sub(new Point(0, a.Size.Height));
+
+                Points[3] = b.Location;
+                Points[3].Y += b.Size.Height;
+
+                Points[2] = Points[3].Add(new Point(0, b.Size.Height));
+            }
+
+            
+
+            return Points;
         }
     }
 }

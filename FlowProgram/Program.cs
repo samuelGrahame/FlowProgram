@@ -22,157 +22,146 @@ namespace FlowProgram
 
                 Random r = new Random();
 
+                var BackColor = Color.FromArgb(100, 75, 75, 75);
+
                 obj.Document.Containers.Add(new IntNode() { Location = new Point(r.Next(0, 500), r.Next(0, 500)), Size = new Size(100, 100) });
                 obj.Document.Containers.Add(new LongNode() { Location = new Point(r.Next(0, 500), r.Next(0, 500)), Size = new Size(100, 100) });
                 obj.Document.Containers.Add(new DoubleNode() { Location = new Point(r.Next(0, 500), r.Next(0, 500)), Size = new Size(100, 100) });
                 obj.Document.Containers.Add(new StringNode() { Value = "Hello World", Location = new Point(r.Next(0, 500), r.Next(0, 500)), Size = new Size(100, 100) });
 
-                FlowEditor.ThemeConfig.DefaultTheme = new DesignTime.Theme()
+                FlowEditor.ThemeConfig.Directory.Add(typeof(IntNode), new DesignTime.Theme()
                 {
-                    BackColor = Color.FromArgb(69, 69, 69), // /,/Color.FromArgb(69, 69, 69),                    
-                    Border = false,
+                    BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                    Border = true,
                     HeaderColor = Color.ForestGreen,
-                    BorderThickness = 1,
-                    BorderColor = Color.FromArgb(50, 50, 50),
+                    BorderThickness = 2,
+                    BorderColor = Color.FromArgb(100, Color.White),
                     CornerRadius = 10,
                     Forecolor = Color.White,
                     Font = new Font("segoe ui", 11),
-                    Shadow = true,
                     FocusedTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(69, 69, 69),
+                        BackColor = BackColor,
                         HeaderColor = Color.ForestGreen,
-                        Border = false,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        Border = true,
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
                         Font = new Font("segoe ui", 11),
-                        Shadow = true
                     },
                     HoverTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
-                        Border = false,
+                        BackColor = Color.FromArgb(100, 75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
+                        Border = true,
                         HeaderColor = Color.ForestGreen,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
                         Font = new Font("segoe ui", 11),
-                        Shadow = true
                     }
-                };
-
+                });
 
                 FlowEditor.ThemeConfig.Directory.Add(typeof(LongNode), new DesignTime.Theme()
                 {
-                    BackColor = Color.FromArgb(69, 69, 69), // /,/Color.FromArgb(69, 69, 69),                    
-                    Border = false,
+                    BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                    Border = true,
                     HeaderColor = Color.LightBlue,
-                    BorderThickness = 1,
-                    BorderColor = Color.FromArgb(50, 50, 50),
+                    BorderThickness = 2,
+                    BorderColor = Color.FromArgb(100, Color.White),
                     CornerRadius = 10,
                     Forecolor = Color.White,
-                    Font = new Font("segoe ui", 11),
-                    Shadow = true,
+                    Font = new Font("segoe ui", 11),                    
                     FocusedTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(69, 69, 69),
+                        BackColor = BackColor,
                         HeaderColor = Color.LightBlue,
-                        Border = false,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        Border = true,
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
-                        Font = new Font("segoe ui", 11),
-                        Shadow = true
+                        Font = new Font("segoe ui", 11),                        
                     },
                     HoverTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
-                        Border = false,
+                        BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                        Border = true,
                         HeaderColor = Color.LightBlue,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
-                        Font = new Font("segoe ui", 11),
-                        Shadow = true
+                        Font = new Font("segoe ui", 11),                        
                     }
                 });
 
                 FlowEditor.ThemeConfig.Directory.Add(typeof(DoubleNode), new DesignTime.Theme()
                 {
-                    BackColor = Color.FromArgb(69, 69, 69), // /,/Color.FromArgb(69, 69, 69),                    
-                    Border = false,
+                    BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                    Border = true,
                     HeaderColor = Color.OrangeRed,
-                    BorderThickness = 1,
-                    BorderColor = Color.FromArgb(50, 50, 50),
+                    BorderThickness = 2,
+                    BorderColor = Color.FromArgb(100, Color.White),
                     CornerRadius = 10,
                     Forecolor = Color.White,
-                    Font = new Font("segoe ui", 11),
-                    Shadow = true,
+                    Font = new Font("segoe ui", 11),                    
                     FocusedTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(69, 69, 69),
+                        BackColor = BackColor,
                         HeaderColor = Color.OrangeRed,
-                        Border = false,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        Border = true,
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
-                        Font = new Font("segoe ui", 11),
-                        Shadow = true
+                        Font = new Font("segoe ui", 11),                        
                     },
                     HoverTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
-                        Border = false,
+                        BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                        Border = true,
                         HeaderColor = Color.OrangeRed,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
-                        Font = new Font("segoe ui", 11),
-                        Shadow = true
+                        Font = new Font("segoe ui", 11)                        
                     }
                 });
 
                 FlowEditor.ThemeConfig.Directory.Add(typeof(StringNode), new DesignTime.Theme()
                 {
-                    BackColor = Color.FromArgb(69, 69, 69), // /,/Color.FromArgb(69, 69, 69),                    
-                    Border = false,
+                    BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                    Border = true,
                     HeaderColor = Color.Purple,
-                    BorderThickness = 1,
-                    BorderColor = Color.FromArgb(50, 50, 50),
+                    BorderThickness = 2,
+                    BorderColor = Color.FromArgb(100, Color.White),
                     CornerRadius = 10,
                     Forecolor = Color.White,
-                    Font = new Font("segoe ui", 11),
-                    Shadow = true,
+                    Font = new Font("segoe ui", 11),                    
                     FocusedTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(69, 69, 69),
+                        BackColor = BackColor,
                         HeaderColor = Color.Purple,
-                        Border = false,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        Border = true,
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
-                        Font = new Font("segoe ui", 11),
-                        Shadow = true
+                        Font = new Font("segoe ui", 11),                        
                     },
                     HoverTheme = new DesignTime.Theme()
                     {
-                        BackColor = Color.FromArgb(75, 75, 75), // /,/Color.FromArgb(69, 69, 69),                    
-                        Border = false,
+                        BackColor = BackColor, // /,/Color.FromArgb(69, 69, 69),                    
+                        Border = true,
                         HeaderColor = Color.Purple,
-                        BorderThickness = 1,
-                        BorderColor = Color.FromArgb(50, 50, 50),
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
                         CornerRadius = 10,
                         Forecolor = Color.White,
-                        Font = new Font("segoe ui", 11),
-                        Shadow = true
+                        Font = new Font("segoe ui", 11),                        
                     }
                 });
 
