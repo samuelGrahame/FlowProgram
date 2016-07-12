@@ -17,14 +17,20 @@ namespace FlowProgram.Controls
         public VisibleEntity FocusedItem = null;
         public VisibleEntity DragItem = null;
 
+        public VisibleEntity ClickedOn = null;
+
         public Point ViewPoint = Point.Empty;
 
         private Point OffsetClick;
         private Point OffsetMiddleClick;
 
+        private Point LeftClickDown;
+        private Point LeftClickDragLocation;
+
         private bool IsLeftMouseDown;
         private bool IsMouseWheenDown;
         private bool IsSpaceDown;
+        private bool IsDraggingPoint;
 
         public bool DrawLocation { get; set; } = true;
         public bool DrawNodesNotVisible { get; set; } = true;
@@ -66,17 +72,33 @@ namespace FlowProgram.Controls
         {
             IsLeftMouseDown = e.Button == MouseButtons.Left;
             IsMouseWheenDown = e.Button == MouseButtons.Middle;
+            IsDraggingPoint = false;
 
-            if(IsLeftMouseDown)
-            {                
-                var FoundItem = GetEntityByPoint(e.Location);
+            if (IsLeftMouseDown)
+            {
+                LeftClickDown = e.Location;
+
+                var FoundItem = GetEntityByPoint(LeftClickDown);
+                ClickedOn = FoundItem;
+                DragItem = null;
 
                 if (FoundItem != null)
                 {
-                    OffsetClick = FoundItem.Location.Sub(e.Location);
-                }
+                    
+                    OffsetClick = FoundItem.Location.Sub(LeftClickDown);
 
-                DragItem = FoundItem;
+                    if(new Rectangle(FoundItem.Location, new Size(FoundItem.Size.Width, GetThemeFromItem(FoundItem).HeaderHeight)).Contains(LeftClickDown.Add(ViewPoint)))
+                    {
+                        // Drag!
+                        DragItem = FoundItem;
+                    }
+                    else
+                    {
+                        LeftClickDragLocation = LeftClickDown;
+                        IsDraggingPoint = true;
+                    }
+                }
+                
                 FocusedItem = FoundItem;
             }
             if(IsMouseWheenDown)
@@ -107,7 +129,21 @@ namespace FlowProgram.Controls
         {
             IsLeftMouseDown = e.Button == MouseButtons.Left;
             if (IsLeftMouseDown)
+            {
                 IsLeftMouseDown = false;
+                if(IsDraggingPoint)
+                {
+                    var FoundItem = GetEntityByPoint(LeftClickDragLocation);
+
+                    if(FoundItem != null)
+                    {
+                        FoundItem.AddConnection(new NodeConnection() { Output = ClickedOn, Input = FoundItem });
+                    }
+                    ClickedOn = null;                    
+
+                    IsDraggingPoint = false;
+                }
+            }
             IsMouseWheenDown = e.Button == MouseButtons.Middle;
             if (IsMouseWheenDown)
                 IsMouseWheenDown = false;
@@ -146,6 +182,10 @@ namespace FlowProgram.Controls
                 if(DragItem != null)
                 {
                     DragItem.Location = OffsetClick.Add(e.Location);
+                    RefreshScreen = true;
+                }else if (IsDraggingPoint) 
+                {
+                    LeftClickDragLocation = e.Location;
                     RefreshScreen = true;
                 }
             }else
@@ -260,7 +300,33 @@ namespace FlowProgram.Controls
 
             if(DragItem != null)
             {
-                DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, DragItem.Location.Sub(ViewPoint));
+                Point ItemLocationInView = DragItem.Location.Sub(ViewPoint);
+
+                DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, ItemLocationInView);
+
+                foreach (var connection in DragItem.Connections())
+                {
+                    if (connection.Input != null && connection.Output != null)
+                    {
+                        Point Point2;
+
+                        if (connection.Input == DragItem)
+                        {
+                            Point2 = connection.Output.Location.Sub(ViewPoint);
+                        }
+                        else if (connection.Output == DragItem)
+                        {
+                            Point2 = connection.Input.Location.Sub(ViewPoint);
+
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
+                        e.Graphics.DrawLine(Pens.Black, ItemLocationInView, Point2);
+                    }
+                }
             }
 
             if(DrawNodesNotVisible)
@@ -284,6 +350,13 @@ namespace FlowProgram.Controls
                         }
                     }
                 }
+            }
+
+            if(IsDraggingPoint)
+            {
+                //                private Point LeftClickDown;
+                //private Point LeftClickDragLocation;
+                e.Graphics.DrawLine(Pens.Black, LeftClickDown, LeftClickDragLocation);
             }
 
             if(DrawLocation)
