@@ -61,6 +61,7 @@
     <Compile Include="DesignTime\ThemeConfiguration.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="NodeConnection.cs" />
     <Compile Include="NodeContainer.cs" />
     <Compile Include="FlowNode.cs" />
     <Compile Include="Nodes\BoolNode.cs" />
