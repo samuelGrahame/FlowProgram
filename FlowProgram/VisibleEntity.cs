@@ -17,6 +17,12 @@ namespace FlowProgram
         private readonly Size OffsetSize = new Size(10, 10);
         private static TextFormatFlags CentreText = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
 
+
+        public List<NodeConnection> Connections()
+        {
+            return connections;
+        }
+
         /// <summary>
         /// To be added from higher objects..
         /// </summary>
@@ -106,9 +112,7 @@ namespace FlowProgram
                             g.DrawRoundedRectangle(pen, new Rectangle(ViewLocation, Size), theme.CornerRadius);
                     }
                 }
-            }
-
-            
+            }           
         }
     }
 }

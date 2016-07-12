@@ -29,8 +29,8 @@ namespace FlowProgram.Controls
         public bool DrawLocation { get; set; } = true;
         public bool DrawNodesNotVisible { get; set; } = true;
 
-        public VisibleEntity P1 = null;
-        public VisibleEntity P2 = null;
+      //  public VisibleEntity P1 = null;
+      //  public VisibleEntity P2 = null;
 
         public FlowEditor()
         {
@@ -46,10 +46,10 @@ namespace FlowProgram.Controls
         {
             IsSpaceDown = e.KeyCode == Keys.Space;
 
-            if (e.KeyCode == Keys.A)
-                P1 = FocusedItem;
-            if (e.KeyCode == Keys.S)
-                P2 = FocusedItem;
+            //if (e.KeyCode == Keys.A)
+            //    P1 = FocusedItem;
+            //if (e.KeyCode == Keys.S)
+            //    P2 = FocusedItem;
 
             base.OnKeyDown(e);
         }
@@ -205,17 +205,16 @@ namespace FlowProgram.Controls
             if (Document == null || Document.Containers.Count == 0)
                 return;
 
-            if(P1 != null && P2 != null)
-            {
-                e.Graphics.DrawCurve(Pens.Black, GetPointsFrom(P1, P2));
-            }
+            // for testing.
+            //if(P1 != null && P2 != null)
+            //{
+            //    e.Graphics.DrawCurve(Pens.Black, GetPointsFrom(P1, P2));
+            //}
 
             List<VisibleEntity> NotVisible = new List<VisibleEntity>();
 
             Rectangle ViewRectangle = new Rectangle(this.ViewPoint, this.Size);
-
-            int VisibleNodes = 0;
-
+            
             for (int i = 0, length = Document.Containers.Count; i < length; i++)
             {
                 VisibleEntity Item = Document.Containers[i];
@@ -223,14 +222,40 @@ namespace FlowProgram.Controls
                 {
                     if (ViewRectangle.IntersectsWith(new Rectangle(Item.Location, Item.Size)))
                     {
+                        Point ItemLocationInView = Item.Location.Sub(ViewPoint);
+
                         Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(ViewPoint));
-                        VisibleNodes++;
+
+                        // Render Connections                        
+                        foreach (var connection in Item.Connections())
+                        {
+                            if(connection.Input != null && connection.Output != null)
+                            {
+                                Point Point2;
+
+                                if(connection.Input == Item)
+                                {
+                                    Point2 = connection.Output.Location.Sub(ViewPoint);
+                                }
+                                else if (connection.Output == Item)
+                                {
+                                    Point2 = connection.Input.Location.Sub(ViewPoint);
+
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+
+                                e.Graphics.DrawLine(Pens.Black, ItemLocationInView, Point2);
+                            }
+                        }                        
                     }
-                    else if(DrawLocation)
+                    else
                     {
                         NotVisible.Add(Item);
                     }
-                }                
+                }
             }
 
             if(DragItem != null)
@@ -262,40 +287,42 @@ namespace FlowProgram.Controls
             }
 
             if(DrawLocation)
-            {
-                TextRenderer.DrawText(e.Graphics, Convert.ToString(ViewPoint) + "\r\nVisible Nodes: " + VisibleNodes, this.Font, Point.Empty, this.ForeColor);
+            {                
+                TextRenderer.DrawText(e.Graphics, string.Format("Location: {0}\r\nVisible: {1}\r\nHidden: {2}\r\nTotal: {3}",
+                    ViewPoint, Document.Containers.Count - NotVisible.Count, NotVisible.Count, Document.Containers.Count)
+                    , this.Font, Point.Empty, this.ForeColor);
             }
         }
 
-        public Point[] GetPointsFrom(VisibleEntity a, VisibleEntity b)
-        {
-            Point[] Points = new Point[4];
+        //public Point[] GetPointsFrom(VisibleEntity a, VisibleEntity b)
+        //{
+        //    Point[] Points = new Point[4];
             
-            Points[0] = a.Location;
+        //    Points[0] = a.Location;
 
-            if (a.Location.Y < b.Location.Y)
-            {
-                Points[0].Y += a.Size.Height;
+        //    if (a.Location.Y < b.Location.Y)
+        //    {
+        //        Points[0].Y += a.Size.Height;
                 
-                Points[1] = Points[0].Add(new Point(0, a.Size.Height));
+        //        Points[1] = Points[0].Add(new Point(0, a.Size.Height));
 
-                Points[3] = b.Location;
+        //        Points[3] = b.Location;
 
-                Points[2] = Points[3].Sub(new Point(0, b.Size.Height));
-            }
-            else
-            {                               
-                Points[1] = Points[0].Sub(new Point(0, a.Size.Height));
+        //        Points[2] = Points[3].Sub(new Point(0, b.Size.Height));
+        //    }
+        //    else
+        //    {                               
+        //        Points[1] = Points[0].Sub(new Point(0, a.Size.Height));
 
-                Points[3] = b.Location;
-                Points[3].Y += b.Size.Height;
+        //        Points[3] = b.Location;
+        //        Points[3].Y += b.Size.Height;
 
-                Points[2] = Points[3].Add(new Point(0, b.Size.Height));
-            }
+        //        Points[2] = Points[3].Add(new Point(0, b.Size.Height));
+        //    }
 
             
 
-            return Points;
-        }
+        //    return Points;
+        //}
     }
 }
