@@ -21,6 +21,15 @@ namespace FlowProgram
         /// To be added from higher objects..
         /// </summary>
         protected List<NodeConnection> connections = new List<NodeConnection>();
+
+        /// <summary>
+        /// This does nothing
+        /// </summary>
+        /// <param name="connection"></param>
+        public virtual void AddConnection(NodeConnection connection)
+        {
+
+        }
         
         public VisibleEntity()
         {

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class ShortNode : FlowNode
+    class ShortNode : LiteralNode
     {
         public short Value;
         public ShortNode()

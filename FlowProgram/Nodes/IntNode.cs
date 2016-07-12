@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class IntNode : FlowNode
+    class IntNode : LiteralNode
     {
         public int Value;
         public IntNode()

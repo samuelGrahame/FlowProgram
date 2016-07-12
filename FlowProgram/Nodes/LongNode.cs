@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class LongNode :FlowNode
+    class LongNode : LiteralNode
     {
         public long Value;
         public LongNode()

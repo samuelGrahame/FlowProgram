@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.Nodes
 {
-    class FloatNode : FlowNode
+    class FloatNode : LiteralNode
     {
         public float Value;
         public FloatNode()

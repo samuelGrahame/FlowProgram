@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class ByteNode : FlowNode
+    class ByteNode : LiteralNode
     {
         public byte Value;
         public ByteNode()

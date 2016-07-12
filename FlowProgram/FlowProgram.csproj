@@ -71,6 +71,7 @@
     <Compile Include="Nodes\FloatNode.cs" />
     <Compile Include="Nodes\FunctionNode.cs" />
     <Compile Include="Nodes\IntNode.cs" />
+    <Compile Include="Nodes\LiteralNode.cs" />
     <Compile Include="Nodes\LongNode.cs" />
     <Compile Include="Nodes\MathNode.cs" />
     <Compile Include="Nodes\NewObjectNode.cs" />
