@@ -17,6 +17,14 @@ namespace FlowProgram
             Bottom
         }
 
+        public static double GetDistanceBetweenPoints(this Point p, Point q)
+        {
+            double a = p.X - q.X;
+            double b = p.Y - q.Y;
+            double distance = Math.Sqrt(a * a + b * b);
+            return distance;
+        }
+
         public static void DrawRoundedRectangle(this Graphics graphics, Pen pen, Rectangle bounds, int cornerRadius = 0, Edges edge = Edges.All)
         {            
             using (GraphicsPath path = RoundedRect(bounds, cornerRadius, edge))

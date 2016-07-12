@@ -15,6 +15,7 @@ namespace FlowProgram
         public Size Size;
         private readonly Point Offset = new Point(5, 5);
         private readonly Size OffsetSize = new Size(10, 10);
+        private static TextFormatFlags CentreText = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
 
         public VisibleEntity()
         {
@@ -57,7 +58,7 @@ namespace FlowProgram
 
             using (SolidBrush brush = new SolidBrush(theme.BackColor))
             {
-                if(theme.CornerRadius==0)
+                if(theme.CornerRadius == 0)
                     g.FillRectangle(brush, new Rectangle(ViewLocation, Size));
                 else
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, Size), theme.CornerRadius);                
@@ -71,11 +72,11 @@ namespace FlowProgram
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)), theme.CornerRadius, Helper.Edges.Top);
             }            
 
-            if(this.type.Name.Length > 0)
+            if(this.Type().Name.Length > 0)
             {
                 using (SolidBrush brush = new SolidBrush(theme.Forecolor))
                 {
-                    TextRenderer.DrawText(g, this.type.Name, theme.Font, new Rectangle(ViewLocation.Add(new Point(0, theme.CornerRadius == 0 ? 0 : theme.CornerRadius / 4)), new Size(Size.Width, theme.HeaderHeight)), theme.Forecolor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);                    
+                    TextRenderer.DrawText(g, this.Type().Name, theme.Font, new Rectangle(ViewLocation.Add(new Point(0, theme.CornerRadius == 0 ? 0 : (int)(theme.CornerRadius * 0.25f))), new Size(Size.Width, theme.HeaderHeight)), theme.Forecolor, CentreText);                    
                 }
             }
 

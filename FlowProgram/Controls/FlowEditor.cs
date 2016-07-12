@@ -19,12 +19,15 @@ namespace FlowProgram.Controls
 
         public Point ViewPoint = Point.Empty;
 
-        public Point OffsetClick;
-        public Point OffsetMiddleClick;
+        private Point OffsetClick;
+        private Point OffsetMiddleClick;
 
         private bool IsLeftMouseDown;
         private bool IsMouseWheenDown;
         private bool IsSpaceDown;
+
+        public bool DrawLocation { get; set; } = true;
+        public bool DrawNodesNotVisible { get; set; } = true;
 
         public VisibleEntity P1 = null;
         public VisibleEntity P2 = null;
@@ -207,18 +210,60 @@ namespace FlowProgram.Controls
                 e.Graphics.DrawCurve(Pens.Black, GetPointsFrom(P1, P2));
             }
 
+            List<VisibleEntity> NotVisible = new List<VisibleEntity>();
+
+            Rectangle ViewRectangle = new Rectangle(this.ViewPoint, this.Size);
+
+            int VisibleNodes = 0;
+
             for (int i = 0, length = Document.Containers.Count; i < length; i++)
             {
-                VisibleEntity Item = Document.Containers[i];                
-                if(DragItem != Item)
+                VisibleEntity Item = Document.Containers[i];
+                if (DragItem != Item)
                 {
-                    Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(ViewPoint));
-                }
+                    if (ViewRectangle.IntersectsWith(new Rectangle(Item.Location, Item.Size)))
+                    {
+                        Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(ViewPoint));
+                        VisibleNodes++;
+                    }
+                    else if(DrawLocation)
+                    {
+                        NotVisible.Add(Item);
+                    }
+                }                
             }
 
             if(DragItem != null)
             {
                 DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, DragItem.Location.Sub(ViewPoint));
+            }
+
+            if(DrawNodesNotVisible)
+            {
+                Point Centre = new Point(ViewPoint.X + this.Size.Width / 2, ViewPoint.Y + this.Size.Height / 2);
+                
+                for (int i = 0, length = NotVisible.Count; i < length; i++)
+                {
+                    // Get Distance?
+                    double Distance = NotVisible[i].Location.GetDistanceBetweenPoints(Centre);
+                    var Item = NotVisible[i];
+                    if (Item.Type().Name.Length > 0)
+                    {
+                        Theme theme = GetThemeFromItem(Item);
+                        using (SolidBrush brush = new SolidBrush(theme.Forecolor))
+                        {
+                            // #TODO# WORK OUT WHERE WE SHOULD DRAW NODE
+
+
+                            //TextRenderer.DrawText(e.Graphics, Item.Type().Name, theme.Font, , theme.Forecolor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                        }
+                    }
+                }
+            }
+
+            if(DrawLocation)
+            {
+                TextRenderer.DrawText(e.Graphics, Convert.ToString(ViewPoint) + "\r\nVisible Nodes: " + VisibleNodes, this.Font, Point.Empty, this.ForeColor);
             }
         }
 
