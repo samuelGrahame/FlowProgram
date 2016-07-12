@@ -335,6 +335,44 @@ namespace FlowProgram.Controls
                 
                 for (int i = 0, length = NotVisible.Count; i < length; i++)
                 {
+                    //NotVisible[i]
+                    if(NotVisible[i].Connections().Count > 0)
+                    {
+                        Point ItemLocationInView = NotVisible[i].Location.Sub(ViewPoint);
+
+                        foreach (var connection in NotVisible[i].Connections())
+                        {
+                            if (connection.Input != null && connection.Output != null)
+                            {
+                                Point Point2;
+
+                                if (connection.Input == NotVisible[i])
+                                {
+                                    if(NotVisible.Contains(connection.Output))
+                                    {
+                                        continue;
+                                    }
+                                    Point2 = connection.Output.Location.Sub(ViewPoint);
+                                }
+                                else if (connection.Output == NotVisible[i])
+                                {
+                                    if (NotVisible.Contains(connection.Input))
+                                    {
+                                        continue;
+                                    }
+                                    Point2 = connection.Input.Location.Sub(ViewPoint);
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+
+                                e.Graphics.DrawLine(Pens.Black, ItemLocationInView, Point2);
+                            }
+                        }
+                    }
+                    
+
                     // Get Distance?
                     double Distance = NotVisible[i].Location.GetDistanceBetweenPoints(Centre);
                     var Item = NotVisible[i];
