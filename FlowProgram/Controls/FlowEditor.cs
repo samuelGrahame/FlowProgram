@@ -9,18 +9,16 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Controls
 {
-    class FlowEditor : Control
+    public class FlowEditor : Control
     {
-        public Item Document = null;
+        public Document Document = new Document();
         public static ThemeConfiguration ThemeConfig = new ThemeConfiguration();
         public VisibleEntity HoverItem = null;
         public VisibleEntity FocusedItem = null;
         public VisibleEntity DragItem = null;
 
         public VisibleEntity ClickedOn = null;
-
-        public Point ViewPoint = Point.Empty;
-
+        
         private Point OffsetClick;
         private Point OffsetMiddleClick;
 
@@ -87,7 +85,7 @@ namespace FlowProgram.Controls
                     
                     OffsetClick = FoundItem.Location.Sub(LeftClickDown);
 
-                    if(new Rectangle(FoundItem.Location, new Size(FoundItem.Size.Width, GetThemeFromItem(FoundItem).HeaderHeight)).Contains(LeftClickDown.Add(ViewPoint)))
+                    if(new Rectangle(FoundItem.Location, new Size(FoundItem.Size.Width, GetThemeFromItem(FoundItem).HeaderHeight)).Contains(LeftClickDown.Add(Document.ViewPoint)))
                     {
                         // Drag!
                         DragItem = FoundItem;
@@ -111,11 +109,11 @@ namespace FlowProgram.Controls
 
         public VisibleEntity GetEntityByPoint(Point p)
         {
-            var mousePoint = p.Add(ViewPoint);
+            var mousePoint = p.Add(Document.ViewPoint);
 
-            for (int i = Document.Containers.Count - 1; i >= 0; i--)
+            for (int i = Document.Items.Count - 1; i >= 0; i--)
             {
-                VisibleEntity Item = Document.Containers[i];
+                VisibleEntity Item = Document.Items[i];
 
                 if (new Rectangle(Item.Location, Item.Size).Contains(mousePoint))
                 {
@@ -150,8 +148,8 @@ namespace FlowProgram.Controls
 
             if (DragItem != null)
             {
-                Document.Containers.Remove(DragItem);
-                Document.Containers.Add(DragItem);
+                Document.Items.Remove(DragItem);
+                Document.Items.Add(DragItem);
 
                 DragItem = null;
             }
@@ -168,9 +166,9 @@ namespace FlowProgram.Controls
 
             if (IsMouseWheenDown)
             {                
-                ViewPoint = IsSpaceDown ?
-                    ViewPoint.Add(e.Location.Sub(OffsetMiddleClick).Mul(2)) :
-                    ViewPoint.Sub(e.Location.Sub(OffsetMiddleClick));
+                Document.ViewPoint = IsSpaceDown ?
+                    Document.ViewPoint.Add(e.Location.Sub(OffsetMiddleClick).Mul(2)) :
+                    Document.ViewPoint.Sub(e.Location.Sub(OffsetMiddleClick));
 
                 OffsetMiddleClick = e.Location;
 
@@ -198,6 +196,21 @@ namespace FlowProgram.Controls
             if (RefreshScreen)
                 Refresh();
             base.OnMouseMove(e);
+        }
+
+        public static Theme GetThemeFromItemNoFlow(VisibleEntity Item)
+        {
+            Theme ItemTheme = ThemeConfig.Directory.ContainsKey(Item.Type()) ? ThemeConfig.Directory[Item.Type()] : null;
+
+            if (ItemTheme == null)
+            {
+                ItemTheme = ThemeConfig.DefaultTheme;
+
+                if (ItemTheme == null) // Cant draw..., maybe the next one will have a set theme...
+                    return null;
+            }            
+
+            return ItemTheme;
         }
 
         public Theme GetThemeFromItem(VisibleEntity Item)
@@ -242,7 +255,7 @@ namespace FlowProgram.Controls
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                             
-            if (Document == null || Document.Containers.Count == 0)
+            if (Document == null || Document.Items.Count == 0)
                 return;
 
             // for testing.
@@ -253,21 +266,21 @@ namespace FlowProgram.Controls
 
             List<VisibleEntity> NotVisible = new List<VisibleEntity>();
 
-            Rectangle ViewRectangle = new Rectangle(this.ViewPoint, this.Size);
+            Rectangle ViewRectangle = new Rectangle(this.Document.ViewPoint, this.Size);
             
-            for (int i = 0, length = Document.Containers.Count; i < length; i++)
+            for (int i = 0, length = Document.Items.Count; i < length; i++)
             {
-                VisibleEntity Item = Document.Containers[i];
+                VisibleEntity Item = Document.Items[i];
                 if (DragItem != Item)
                 {
                     if (ViewRectangle.IntersectsWith(new Rectangle(Item.Location, Item.Size)))
                     {
-                        Point ItemLocationInView = Item.Location.Sub(ViewPoint);
+                        Point ItemLocationInView = Item.Location.Sub(Document.ViewPoint);
 
-                        Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(ViewPoint));
+                        Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(Document.ViewPoint));
 
                         // Render Connections                        
-                        foreach (var connection in Item.Connections())
+                        foreach (var connection in Item.Connections)
                         {
                             if(connection.Input != null && connection.Output != null)
                             {
@@ -275,11 +288,11 @@ namespace FlowProgram.Controls
 
                                 if(connection.Input == Item)
                                 {
-                                    Point2 = connection.Output.Location.Sub(ViewPoint);
+                                    Point2 = connection.Output.Location.Sub(Document.ViewPoint);
                                 }
                                 else if (connection.Output == Item)
                                 {
-                                    Point2 = connection.Input.Location.Sub(ViewPoint);
+                                    Point2 = connection.Input.Location.Sub(Document.ViewPoint);
 
                                 }
                                 else
@@ -300,11 +313,11 @@ namespace FlowProgram.Controls
 
             if(DragItem != null)
             {
-                Point ItemLocationInView = DragItem.Location.Sub(ViewPoint);
+                Point ItemLocationInView = DragItem.Location.Sub(Document.ViewPoint);
 
                 DragItem.Render(GetThemeFromItem(DragItem), e.Graphics, ItemLocationInView);
 
-                foreach (var connection in DragItem.Connections())
+                foreach (var connection in DragItem.Connections)
                 {
                     if (connection.Input != null && connection.Output != null)
                     {
@@ -312,11 +325,11 @@ namespace FlowProgram.Controls
 
                         if (connection.Input == DragItem)
                         {
-                            Point2 = connection.Output.Location.Sub(ViewPoint);
+                            Point2 = connection.Output.Location.Sub(Document.ViewPoint);
                         }
                         else if (connection.Output == DragItem)
                         {
-                            Point2 = connection.Input.Location.Sub(ViewPoint);
+                            Point2 = connection.Input.Location.Sub(Document.ViewPoint);
 
                         }
                         else
@@ -331,16 +344,16 @@ namespace FlowProgram.Controls
 
             if(DrawNodesNotVisible)
             {
-                Point Centre = new Point(ViewPoint.X + this.Size.Width / 2, ViewPoint.Y + this.Size.Height / 2);
+                Point Centre = new Point(Document.ViewPoint.X + this.Size.Width / 2, Document.ViewPoint.Y + this.Size.Height / 2);
                 
                 for (int i = 0, length = NotVisible.Count; i < length; i++)
                 {
                     //NotVisible[i]
-                    if(NotVisible[i].Connections().Count > 0)
+                    if(NotVisible[i].Connections.Count > 0)
                     {
-                        Point ItemLocationInView = NotVisible[i].Location.Sub(ViewPoint);
+                        Point ItemLocationInView = NotVisible[i].Location.Sub(Document.ViewPoint);
 
-                        foreach (var connection in NotVisible[i].Connections())
+                        foreach (var connection in NotVisible[i].Connections)
                         {
                             if (connection.Input != null && connection.Output != null)
                             {
@@ -352,7 +365,7 @@ namespace FlowProgram.Controls
                                     {
                                         continue;
                                     }
-                                    Point2 = connection.Output.Location.Sub(ViewPoint);
+                                    Point2 = connection.Output.Location.Sub(Document.ViewPoint);
                                 }
                                 else if (connection.Output == NotVisible[i])
                                 {
@@ -360,7 +373,7 @@ namespace FlowProgram.Controls
                                     {
                                         continue;
                                     }
-                                    Point2 = connection.Input.Location.Sub(ViewPoint);
+                                    Point2 = connection.Input.Location.Sub(Document.ViewPoint);
                                 }
                                 else
                                 {
@@ -400,7 +413,7 @@ namespace FlowProgram.Controls
             if(DrawLocation)
             {                
                 TextRenderer.DrawText(e.Graphics, string.Format("Location: {0}\r\nVisible: {1}\r\nHidden: {2}\r\nTotal: {3}",
-                    ViewPoint, Document.Containers.Count - NotVisible.Count, NotVisible.Count, Document.Containers.Count)
+                    Document.ViewPoint, Document.Items.Count - NotVisible.Count, NotVisible.Count, Document.Items.Count)
                     , this.Font, Point.Empty, this.ForeColor);
             }
         }

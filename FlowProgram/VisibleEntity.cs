@@ -9,24 +9,19 @@ using System.Windows.Forms;
 
 namespace FlowProgram
 {
-    class VisibleEntity : Entity
+    public class VisibleEntity : Entity
     {
+        public static bool DisplayMode = true;
         public Point Location;
         public Size Size;
         private readonly Point Offset = new Point(5, 5);
         private readonly Size OffsetSize = new Size(10, 10);
         private static TextFormatFlags CentreText = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
-
-
-        public List<NodeConnection> Connections()
-        {
-            return connections;
-        }
-
+        
         /// <summary>
         /// To be added from higher objects..
         /// </summary>
-        protected List<NodeConnection> connections = new List<NodeConnection>();
+        public List<NodeConnection> Connections = new List<NodeConnection>();
 
         /// <summary>
         /// This does nothing
@@ -69,7 +64,7 @@ namespace FlowProgram
             {
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(25, Color.Black)))
                 {
-                    if (theme.CornerRadius == 0)
+                    if (theme.CornerRadius == 0 || !DisplayMode)
                         g.FillRectangle(brush, new Rectangle(ViewLocation.Sub(Offset), Size.Add(OffsetSize)));
                     else
                         g.FillRoundedRectangle(brush, new Rectangle(ViewLocation.Sub(Offset), Size.Add(OffsetSize)), theme.CornerRadius);
@@ -78,7 +73,7 @@ namespace FlowProgram
 
             using (SolidBrush brush = new SolidBrush(theme.BackColor))
             {
-                if(theme.CornerRadius == 0)
+                if(theme.CornerRadius == 0 || !DisplayMode)
                     g.FillRectangle(brush, new Rectangle(ViewLocation, Size));
                 else
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, Size), theme.CornerRadius);                
@@ -86,13 +81,13 @@ namespace FlowProgram
 
             using (SolidBrush brush = new SolidBrush(theme.HeaderColor))
             {
-                if (theme.CornerRadius == 0)
+                if (theme.CornerRadius == 0 || !DisplayMode)
                     g.FillRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)));
                 else
                     g.FillRoundedRectangle(brush, new Rectangle(ViewLocation, new Size(Size.Width, theme.HeaderHeight)), theme.CornerRadius, Helper.Edges.Top);
             }            
 
-            if(this.Type().Name.Length > 0)
+            if(DisplayMode && this.Type().Name.Length > 0)
             {
                 using (SolidBrush brush = new SolidBrush(theme.Forecolor))
                 {
@@ -106,13 +101,13 @@ namespace FlowProgram
                 {
                     using (Pen pen = new Pen(brush, theme.BorderThickness))
                     {
-                        if (theme.CornerRadius == 0)
+                        if (theme.CornerRadius == 0 || !DisplayMode)
                             g.DrawRectangle(pen, new Rectangle(ViewLocation, Size));
                         else
                             g.DrawRoundedRectangle(pen, new Rectangle(ViewLocation, Size), theme.CornerRadius);
                     }
                 }
-            }           
+            }
         }
     }
 }

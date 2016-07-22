@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.DesignTime
 {
-    class Project : Entity
+    public class Project : Entity
     {
-        public List<Item> Items;
+        public List<Document> Documents;
+
+        public Document EntryPoint;
+
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public string Version { get; set; }        
 
         public Project()
         {
-            Items = new List<Item>();
+            Documents = new List<Document>();
         }
     }
 }

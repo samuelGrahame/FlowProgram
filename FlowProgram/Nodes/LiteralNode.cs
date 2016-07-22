@@ -20,17 +20,17 @@ namespace FlowProgram.Nodes
                     return;
                 Output = connection;
 
-                if(!connections.Contains(connection))
-                    base.connections.Add(connection);
+                if(!Connections.Contains(connection))
+                    base.Connections.Add(connection);
             }else
             {
-                if (connections.Contains(Output))                
-                    connections.Remove(Output);  
+                if (Connections.Contains(Output))
+                    Connections.Remove(Output);  
                               
                 Output = connection;
 
-                if (!connections.Contains(connection))
-                    base.connections.Add(connection);
+                if (!Connections.Contains(connection))
+                    base.Connections.Add(connection);
             }            
         }
     }

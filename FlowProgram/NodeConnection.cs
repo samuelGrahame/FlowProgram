@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram
 {
-    class NodeConnection : Entity
+    public class NodeConnection : Entity
     {
         public string Name { get; set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram
 {
-    class Entity
+    public class Entity
     {
         /// <summary>
         /// Just a way of giving a unique identitfier.
