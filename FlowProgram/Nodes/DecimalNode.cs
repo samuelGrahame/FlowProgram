@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class DecimalNode : LiteralNode
+    class DecimalNode : VisibleEntity
     {
         public decimal Value;
         public DecimalNode()

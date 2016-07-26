@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FlowProgram
 {
-    class NodeContainer : VisibleEntity
+    public class NodeContainer
     {
-        public List<FlowNode> Nodes;
+        public List<VisibleEntity> Nodes;
 
         public NodeContainer()
         {
-            Nodes = new List<FlowNode>();
+            Nodes = new List<VisibleEntity>();
         }
     }
 }

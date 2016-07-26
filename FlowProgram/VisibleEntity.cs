@@ -17,7 +17,8 @@ namespace FlowProgram
         private readonly Point Offset = new Point(5, 5);
         private readonly Size OffsetSize = new Size(10, 10);
         private static TextFormatFlags CentreText = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
-        
+        public ConnectionRules ConnectionRules = ConnectionRules.Output;
+                
         /// <summary>
         /// To be added from higher objects..
         /// </summary>
@@ -27,9 +28,21 @@ namespace FlowProgram
         /// This does nothing
         /// </summary>
         /// <param name="connection"></param>
-        public virtual void AddConnection(NodeConnection connection)
+        public void AddConnection(NodeConnection connection)
         {
-
+            // we are input!           
+            if(ConnectionRules == ConnectionRules.Input || ConnectionRules == ConnectionRules.Both)
+            {
+                foreach (var item in Connections)
+                {
+                    if (item.Output == connection.Output && item.Input == connection.Input)
+                    {
+                        return;
+                    }
+                }
+                if (!Connections.Contains(connection))
+                    Connections.Add(connection);
+            }
         }
         
         public VisibleEntity()
@@ -109,5 +122,13 @@ namespace FlowProgram
                 }
             }
         }
+    }
+
+    public enum ConnectionRules
+    {
+        Output,
+        Input,
+        Both,
+        None
     }
 }

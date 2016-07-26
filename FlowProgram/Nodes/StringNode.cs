@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class StringNode : LiteralNode
+    class StringNode : VisibleEntity
     {
         public string Value;
 

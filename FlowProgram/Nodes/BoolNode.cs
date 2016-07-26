@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class BoolNode : LiteralNode
+    class BoolNode : VisibleEntity
     {
         public bool Value;
         public BoolNode()

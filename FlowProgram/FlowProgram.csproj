@@ -45,6 +45,7 @@
     <Reference Include="DevExpress.XtraGrid.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraVerticalGrid.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -79,21 +80,21 @@
     <Compile Include="Helper.cs" />
     <Compile Include="NodeConnection.cs" />
     <Compile Include="NodeContainer.cs" />
-    <Compile Include="FlowNode.cs" />
     <Compile Include="Nodes\BoolNode.cs" />
     <Compile Include="Nodes\DateTimeNode.cs" />
     <Compile Include="Nodes\DecimalNode.cs" />
     <Compile Include="Nodes\DoubleNode.cs" />
+    <Compile Include="Nodes\EntryNode.cs" />
     <Compile Include="Nodes\FloatNode.cs" />
     <Compile Include="Nodes\FunctionNode.cs" />
     <Compile Include="Nodes\IntNode.cs" />
-    <Compile Include="Nodes\LiteralNode.cs" />
     <Compile Include="Nodes\LongNode.cs" />
     <Compile Include="Nodes\MathNode.cs" />
     <Compile Include="Nodes\NewObjectNode.cs" />
     <Compile Include="Nodes\ByteNode.cs" />
     <Compile Include="Nodes\ShortNode.cs" />
     <Compile Include="Nodes\StringNode.cs" />
+    <Compile Include="Nodes\VarNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Nodes\VoidNode.cs" />

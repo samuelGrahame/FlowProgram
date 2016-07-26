@@ -12,7 +12,7 @@ namespace FlowProgram.Controls
     public class FlowEditor : Control
     {
         public Document Document = new Document();
-        public static ThemeConfiguration ThemeConfig = new ThemeConfiguration();
+        public static ThemeConfiguration ThemeConfig = null;
         public VisibleEntity HoverItem = null;
         public VisibleEntity FocusedItem = null;
         public VisibleEntity DragItem = null;
@@ -92,8 +92,11 @@ namespace FlowProgram.Controls
                     }
                     else
                     {
-                        LeftClickDragLocation = LeftClickDown;
-                        IsDraggingPoint = true;
+                        if(FoundItem.ConnectionRules == ConnectionRules.Both || FoundItem.ConnectionRules == ConnectionRules.Output)
+                        {
+                            LeftClickDragLocation = LeftClickDown;
+                            IsDraggingPoint = true;
+                        }
                     }
                 }
                 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FlowProgram.DesignTime;
+using FlowProgram.Nodes;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -16,6 +19,75 @@ namespace FlowProgram
             Top,
             Bottom
         }
+
+        public static VisibleEntity[] GetRegisteredNodes()
+        {
+            return new VisibleEntity[] {
+                new EntryNode(), new VarNode(),
+                new BoolNode(), new ByteNode(), new DateTimeNode() , new DecimalNode(), new DoubleNode(), new FunctionNode(), new IntNode(),
+                new LongNode(), new MathNode(), new NewObjectNode(), new ShortNode(), new StringNode(), new VoidNode()};
+        }
+
+        public static ThemeConfiguration GetDefaultThemeConfiguration()
+        {
+            var DefaultBackground = Color.FromArgb(100, 75, 75, 75);
+            var DefaultFont = new Font("segoe ui", 11);
+            var random = new Random(3);
+            var themeConfig = new ThemeConfiguration();
+            foreach (var item in GetRegisteredNodes())
+            {
+                var code = Color.FromArgb(255, Color.FromArgb(random.Next()));                
+
+                var ItemHeaderColor = code;
+
+                themeConfig.Directory.Add(item.Type(), new Theme()
+                {
+                    BackColor = DefaultBackground,
+                    Border = true,
+                    HeaderColor = ItemHeaderColor,
+                    BorderThickness = 2,
+                    BorderColor = Color.FromArgb(100, Color.White),
+                    CornerRadius = 10,
+                    Forecolor = Color.White,
+                    Font = DefaultFont,
+                    FocusedTheme = new Theme()
+                    {
+                        BackColor = DefaultBackground,
+                        Border = true,
+                        HeaderColor = ItemHeaderColor,
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.Black),
+                        CornerRadius = 10,
+                        Forecolor = Color.White,
+                        Font = DefaultFont
+                    },
+                    HoverTheme = new Theme()
+                    {
+                        BackColor = Color.FromArgb(100, DefaultBackground),
+                        Border = true,
+                        HeaderColor = ItemHeaderColor,
+                        BorderThickness = 2,
+                        BorderColor = Color.FromArgb(100, Color.White),
+                        CornerRadius = 10,
+                        Forecolor = Color.White,
+                        Font = DefaultFont
+                    }
+                });                
+            }
+
+            return themeConfig;
+        }
+
+        public static readonly JsonSerializerSettings DefaultJsonSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.Auto,
+            DateFormatString = "yyyy-MM-dd",
+            Formatting = Formatting.None,
+            NullValueHandling = NullValueHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, //prevents a infinite loop of serialisation
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full //FIXES ISSUE WHERE JSON HAS NO IDEA WHAT TO DO WITH DYNAMIC PROXIES GENERATED FROM EF
+        }; // able to link to DLL
 
         public static double GetDistanceBetweenPoints(this Point p, Point q)
         {

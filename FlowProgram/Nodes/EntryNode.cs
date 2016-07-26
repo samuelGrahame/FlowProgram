@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlowProgram
+namespace FlowProgram.Nodes
 {
-    class FlowNode : VisibleEntity
+    public class EntryNode : VisibleEntity
     {
-        
+
     }
 }

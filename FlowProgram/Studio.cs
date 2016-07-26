@@ -34,7 +34,7 @@ namespace FlowProgram
             {
                 try
                 {
-                    project = JsonConvert.DeserializeObject<Project>(File.ReadAllText(projectFile), DefaultJsonSettings);
+                    project = JsonConvert.DeserializeObject<Project>(File.ReadAllText(projectFile), FlowProgram.Helper.DefaultJsonSettings);
                     ProjectLocation = projectFile;
 
                     DisplayProject();
@@ -55,7 +55,7 @@ namespace FlowProgram
         {
             try
             {
-                File.WriteAllText(projectFile, JsonConvert.SerializeObject(project, DefaultJsonSettings));
+                File.WriteAllText(projectFile, JsonConvert.SerializeObject(project, FlowProgram.Helper.DefaultJsonSettings));
                 ProjectLocation = projectFile;
             }
             catch (Exception ex)
@@ -207,17 +207,6 @@ namespace FlowProgram
                 AddToXtraTabControl(xtraTabControl1, newDoc);
         }
 
-        private static readonly JsonSerializerSettings DefaultJsonSettings = new JsonSerializerSettings()
-        {
-            TypeNameHandling = TypeNameHandling.Auto,
-            DateFormatString = "yyyy-MM-dd",
-            Formatting = Formatting.None,
-            NullValueHandling = NullValueHandling.Ignore,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, //prevents a infinite loop of serialisation
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full //FIXES ISSUE WHERE JSON HAS NO IDEA WHAT TO DO WITH DYNAMIC PROXIES GENERATED FROM EF
-        }; // able to link to DLL
-
         private void Studio_Load(object sender, EventArgs e)
         {
             var dt = new DataTable();
@@ -226,20 +215,11 @@ namespace FlowProgram
             dt.Columns.Add("Name", typeof(string));
             dt.Columns.Add("Node", typeof(Type));
 
-            AddItemToToolBox(new BoolNode(), dt);
-            AddItemToToolBox(new ByteNode(), dt);
-            AddItemToToolBox(new DateTimeNode(), dt);
-            AddItemToToolBox(new DecimalNode(), dt);
-            AddItemToToolBox(new DoubleNode(), dt);
-            AddItemToToolBox(new FlowNode(), dt);
-            AddItemToToolBox(new FunctionNode(), dt);
-            AddItemToToolBox(new IntNode(), dt);
-            AddItemToToolBox(new LongNode(), dt);
-            AddItemToToolBox(new MathNode(), dt);
-            AddItemToToolBox(new NewObjectNode(), dt);
-            AddItemToToolBox(new ShortNode(), dt);
-            AddItemToToolBox(new StringNode(), dt);
-            AddItemToToolBox(new VoidNode(), dt);
+
+            foreach (var item in FlowProgram.Helper.GetRegisteredNodes())
+            {
+                AddItemToToolBox(item, dt);
+            }
 
             dt.AcceptChanges();
 
@@ -262,8 +242,10 @@ namespace FlowProgram
             {
                 var flow = ((FlowXtraTabPage)xtraTabControl1.SelectedTabPage).Flow;
                 var ve = (VisibleEntity)Activator.CreateInstance((Type)gridView2.GetFocusedRowCellValue("Node"));
-
-                ve.Size = new Size(75, 75);
+                
+                ve.Size = new Size(TextRenderer.MeasureText(
+                    ve.Type().Name, flow.GetThemeFromItem(ve).Font).Width + 10,
+                    75);
                 ve.Location = flow.Document.ViewPoint.Add(new Point(flow.Width / 2, flow.Height / 2).Sub(new Point(ve.Size.Width / 2, ve.Size.Height / 2)));
                 
                 flow.Document.Items.Add(ve);

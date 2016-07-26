@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.Nodes
 {
-    class FloatNode : VisibleEntity
+    public class VarNode : VisibleEntity
     {
-        public float Value;
-        public FloatNode()
+        public VarNode()
         {
-            //Name = "Float";
+            ConnectionRules = ConnectionRules.Both;
         }
     }
 }
+

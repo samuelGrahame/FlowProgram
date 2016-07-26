@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.Nodes
 {
-    class MathNode : FlowNode
+    class MathNode : VisibleEntity
     {
 
         public MathNode()

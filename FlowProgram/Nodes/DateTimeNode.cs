@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FlowProgram.Nodes
 {
-    class DateTimeNode : LiteralNode
+    class DateTimeNode : VisibleEntity
     {
         public DateTime? Value;
         public DateTimeNode()

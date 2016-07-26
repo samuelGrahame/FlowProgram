@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.Nodes
 {
-    class NewObjectNode : FlowNode
+    class NewObjectNode : VisibleEntity
     {
         public NewObjectNode()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowProgram.Nodes
 {
-    class VoidNode : FlowNode
+    class VoidNode : VisibleEntity
     {
         public VoidNode()
         {
