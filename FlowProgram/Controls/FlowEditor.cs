@@ -254,6 +254,8 @@ namespace FlowProgram.Controls
             return ItemTheme;
         }
 
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -268,6 +270,7 @@ namespace FlowProgram.Controls
             //}
 
             List<VisibleEntity> NotVisible = new List<VisibleEntity>();
+            List<VisibleEntity> Visible = new List<VisibleEntity>();
 
             Rectangle ViewRectangle = new Rectangle(this.Document.ViewPoint, this.Size);
             
@@ -278,34 +281,7 @@ namespace FlowProgram.Controls
                 {
                     if (ViewRectangle.IntersectsWith(new Rectangle(Item.Location, Item.Size)))
                     {
-                        Point ItemLocationInView = Item.Location.Sub(Document.ViewPoint);
-
-                        Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(Document.ViewPoint));
-
-                        // Render Connections                        
-                        foreach (var connection in Item.Connections)
-                        {
-                            if(connection.Input != null && connection.Output != null)
-                            {
-                                Point Point2;
-
-                                if(connection.Input == Item)
-                                {
-                                    Point2 = connection.Output.Location.Sub(Document.ViewPoint);
-                                }
-                                else if (connection.Output == Item)
-                                {
-                                    Point2 = connection.Input.Location.Sub(Document.ViewPoint);
-
-                                }
-                                else
-                                {
-                                    continue;
-                                }
-
-                                e.Graphics.DrawLine(Pens.Black, ItemLocationInView, Point2);
-                            }
-                        }                        
+                        Visible.Add(Item);                                             
                     }
                     else
                     {
@@ -314,7 +290,45 @@ namespace FlowProgram.Controls
                 }
             }
 
-            if(DragItem != null)
+            for (int i = 0, length = Visible.Count; i < length; i++)
+            {
+                // Render Connections                     
+                VisibleEntity Item = Document.Items[i];
+                Point ItemLocationInView = Item.Location.Sub(Document.ViewPoint);
+
+                foreach (var connection in Item.Connections)
+                {
+                    if (connection.Input != null && connection.Output != null)
+                    {
+                        Point Point2;
+
+                        if (connection.Input == Item)
+                        {
+                            Point2 = connection.Output.Location.Sub(Document.ViewPoint);
+                        }
+                        else if (connection.Output == Item)
+                        {
+                            Point2 = connection.Input.Location.Sub(Document.ViewPoint);
+
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
+                        e.Graphics.DrawLine(Pens.Black, ItemLocationInView, Point2);
+                    }
+                }
+            }
+
+            for (int i = 0, length = Visible.Count; i < length; i++)
+            {
+                // Render Connections                     
+                VisibleEntity Item = Document.Items[i];
+                Item.Render(GetThemeFromItem(Item), e.Graphics, Item.Location.Sub(Document.ViewPoint));
+            }
+
+            if (DragItem != null)
             {
                 Point ItemLocationInView = DragItem.Location.Sub(Document.ViewPoint);
 
